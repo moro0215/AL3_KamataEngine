@@ -60,6 +60,8 @@ void GameScene::Update() {
 		audio_->StopWave(voiceHandle_);
 	}
 
+	#ifdef _DEBUG
+
 	//デバックテキストの表示
 	ImGui::Begin("Debug1");
 	ImGui::Text("Morozumi Satoshi %d.%d.%d", 2005, 02, 15);
@@ -70,6 +72,8 @@ void GameScene::Update() {
 	ImGui::End();
 	//デモウィンドウの表示を有効化
 	ImGui::ShowDemoWindow();
+
+	#endif 
 
 	//デバックカメラの更新
 	debugCamera_->Update();
