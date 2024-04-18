@@ -22,9 +22,6 @@
     <Filter Include="ヘッダー ファイル\2d">
       <UniqueIdentifier>{96135050-efba-425e-a9fe-8881bd7caad8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\audo">
-      <UniqueIdentifier>{3a0044cc-1b7d-4ed5-a1a6-9074ed1b1769}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\base">
       <UniqueIdentifier>{551d5cf3-f4a6-49b9-832f-076a33cef817}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,9 @@
     </Filter>
     <Filter Include="ソース ファイル\2d">
       <UniqueIdentifier>{814a0f6d-f847-4c45-856d-4688fa4c9e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\audo">
+      <UniqueIdentifier>{3a0044cc-1b7d-4ed5-a1a6-9074ed1b1769}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

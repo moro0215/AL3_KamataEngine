@@ -3,6 +3,7 @@
 #include <cassert>
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
+#include "AxisIndicator.h"
 
 GameScene::GameScene() {}
 
@@ -38,6 +39,11 @@ void GameScene::Initialize() {
 
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(100, 100);
+
+	//軸方向表示の表示を有効
+	AxisIndicator::GetInstance()->SetVisible(true);
+	//軸方向表示が参照するビュープロジェクションの指定
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 }
 
 void GameScene::Update() {
@@ -81,8 +87,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	
-	//ラインの描画
+
+	// ラインの描画
 	PrimitiveDrawer::GetInstance()->DrawLine3d({-10, 0, 0}, {50, -50, 50}, {1.0f, 0.0f, 0.0f, 1.0f});
 
 	// スプライト描画後処理
