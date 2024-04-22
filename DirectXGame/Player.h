@@ -5,11 +5,21 @@
 class Player {
 
 public:
+	//コンストラクタ
+	Player();
+
+	//デストラクタ
+	~Player();
+
+	//初期化処理
 	void Initialize(Model*model,uint32_t textureHandle);
 
+	//更新処理
 	void Update();
 
+	//描画処理
 	void Draw();
+
 
 private:
 	//ワールド変換データ
