@@ -7,6 +7,12 @@ GameScene::GameScene() {}
 GameScene::~GameScene(){
 	delete model_;
 	delete player_;
+	delete blockModel_;
+
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+		delete worldTransformBlock;
+	}
+	worldTransformBlocks_.clear();
 }
 
 void GameScene::Initialize() {
@@ -27,11 +33,38 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	//自キャラの初期化
 	player_->Initialize(model_, textureHandle_, &viewProjection_);
+
+	//ブロックの3Dモデルデータ生成
+	blockModel_ = Model::Create();
+	//要素数
+	const uint32_t kNumblockHorizontal = 20;
+	//ブロック１個分の横幅
+	const float kBlockWidth = 2.0f;
+	//要素数を変更
+	worldTransformBlocks_.resize(kNumblockHorizontal);
+	//キューブの生成
+	for (uint32_t i = 0; i < kNumblockHorizontal; ++i) {
+		worldTransformBlocks_[i] = new WorldTransform();
+		worldTransformBlocks_[i]->Initialize();
+		worldTransformBlocks_[i]->translation_.x = kBlockWidth * i;
+		worldTransformBlocks_[i]->translation_.y = 0.0f;
+	}
+
 }
 
 void GameScene::Update() {
 	//自キャラの更新
 	player_->Update();
+	//ブロックの更新
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+	
+
+
+
+
+		//定数バッファーに転送
+		worldTransformBlock->TransferMatrix();
+	}
 }
 
 void GameScene::Draw() {
