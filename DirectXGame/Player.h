@@ -1,6 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
+#include "ViewProjection.h"
 
 class Player {
 
@@ -12,7 +13,7 @@ public:
 	~Player();
 
 	//初期化処理
-	void Initialize(Model*model,uint32_t textureHandle);
+	void Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection);
 
 	//更新処理
 	void Update();
@@ -30,5 +31,7 @@ private:
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+
+	ViewProjection* viewProjection_ = nullptr;
 
 };
