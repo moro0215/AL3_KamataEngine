@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "function.h"
 
 GameScene::GameScene() {}
 
@@ -36,6 +37,7 @@ void GameScene::Initialize() {
 
 	//ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
+	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
 	//要素数
 	const uint32_t kNumblockHorizontal = 20;
 	//ブロック１個分の横幅
@@ -58,10 +60,7 @@ void GameScene::Update() {
 	//ブロックの更新
 	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
 	
-
-
-
-
+		worldTransformBlock->matWorld_ = MakeAffineMatrix(worldTransformBlock->scale_, worldTransformBlock->rotation_, worldTransformBlock->translation_);
 		//定数バッファーに転送
 		worldTransformBlock->TransferMatrix();
 	}
@@ -94,6 +93,11 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	//自キャラの描画
 	player_->Draw();
+
+	//ブロックの描画
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+		blockModel_->Draw(*worldTransformBlock, viewProjection_);
+	}
 
 	/// </summary>
 

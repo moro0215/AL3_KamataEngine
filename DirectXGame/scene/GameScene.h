@@ -10,6 +10,7 @@
 #include "Player.h"
 #include <vector>
 
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -62,6 +63,7 @@ private: // メンバ変数
 
 	//ブロックの3Dモデルデータ
 	Model* blockModel_ = nullptr;
+	uint32_t blockTextureHandle_=0u;
 
 	std::vector<WorldTransform*> worldTransformBlocks_;
 };
