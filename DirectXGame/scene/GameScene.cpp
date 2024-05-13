@@ -19,6 +19,7 @@ GameScene::~GameScene() {
 	worldTransformBlocks_.clear();
 
 	delete debugCamera_;
+	delete skydome_;
 }
 
 void GameScene::Initialize() {
@@ -74,6 +75,11 @@ void GameScene::Initialize() {
 	}
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
+
+	//天球の生成
+	skydome_ = new Skydome();
+	//天球の初期化
+	skydome_->Initialize();
 }
 
 void GameScene::Update() {
@@ -112,6 +118,9 @@ void GameScene::Update() {
 	//ビュープロジェクション行列の更新と転送	
 		viewProjection_.UpdateMatrix();
 	}
+
+	//天球の更新
+	skydome_->Update();
 }
 
 void GameScene::Draw() {
@@ -151,6 +160,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	// player_->Draw();
+
+	//天球の描画
+	skydome_->Draw();
 
 	/// </summary>
 
