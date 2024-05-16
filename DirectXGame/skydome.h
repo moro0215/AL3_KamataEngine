@@ -1,6 +1,7 @@
 #pragma once
-#include <Model.h>
-#include <WorldTransform.h>
+#include "Model.h"
+#include "WorldTransform.h"
+#include "ViewProjection.h"
 
 class Skydome {
 public:
@@ -11,7 +12,7 @@ public:
 	~Skydome();
 
 	// 初期化処理
-	void Initialize();
+	void Initialize(Model* model, ViewProjection* viewProjection);
 
 	// 更新処理
 	void Update();
@@ -25,4 +26,5 @@ private:
 	//モデル
 	Model* model_ = nullptr;
 
+	ViewProjection* viewProjection_ = nullptr;
 };

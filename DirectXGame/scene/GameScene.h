@@ -76,4 +76,7 @@ private: // メンバ変数
 
 	//天球
 	Skydome* skydome_ = nullptr;
+
+	//天球の3Dモデル
+	Model* modelSkydome_ = nullptr;
 };
