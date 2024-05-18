@@ -113,6 +113,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="skydome.cpp" />
+    <ClCompile Include="WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="function.h" />
+    <ClInclude Include="function2.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="skydome.h" />
+    <ClInclude Include="WorldTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">

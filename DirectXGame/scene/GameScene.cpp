@@ -3,6 +3,12 @@
 #include <cassert>
 #include "function.h"
 
+void WorldTransform::UpdateMatrix() {
+	// スケール、回転、平行移動を合成して行列を計算する
+	matWorld_ = MakeAffineMatrix(scale_, rotation_, translation_);
+	// 定数バッファーに転送
+	TransferMatrix();
+}
 
 GameScene::GameScene() {}
 
@@ -30,7 +36,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// テクスチャの読み込み
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	textureHandle_ = TextureManager::Load("player.png");
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
@@ -45,20 +51,25 @@ void GameScene::Initialize() {
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
 	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
+
 	// 要素数
 	const uint32_t kNumBlockHorizontal = 20;
 	const uint32_t kNumblockVirtical = 10;
+
 	// ブロック１個分の横幅
 	const float kBlockWidth = 2.0f;
 	const float kBlockHeight = 2.0f;
+
 	// 要素数を変更
 	worldTransformBlocks_.resize(kNumBlockHorizontal);
+
 	// 列数の設定(縦)
 	worldTransformBlocks_.resize(kNumblockVirtical);
 	for (uint32_t i = 0; i < kNumblockVirtical; ++i) {
 		// 横のブロック数
 		worldTransformBlocks_[i].resize(kNumBlockHorizontal);
 	}
+
 	// ブロックの生成
 	for (uint32_t i = 0; i < kNumblockVirtical; ++i) {
 		for (uint32_t j = 0; j < kNumBlockHorizontal; ++j) {
@@ -74,6 +85,7 @@ void GameScene::Initialize() {
 			}
 		}
 	}
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	debugCamera_->SetFarZ(3000);
@@ -172,7 +184,6 @@ void GameScene::Draw() {
 
 	// 天球の描画
 	skydome_->Draw();
- 
 	
 	/// </summary>
 
