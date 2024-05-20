@@ -15,8 +15,8 @@ struct MapChipData {
 class MapChipField {
 private:
 	//1ブロックのサイズ
-	static inline const float kBlockWidth = 1.0f;
-	static inline const float kBlockHeight = 1.0f;
+	static inline const float kBlockWidth = 2.0f;
+	static inline const float kBlockHeight = 2.0f;
 	//ブロックの個数
 	static inline const int kNumBlockVertical = 20;
 	static inline const int kNumBlockHorizontal = 100;
@@ -32,6 +32,9 @@ public:
 
 	Vector3 GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex);
 
-	
+	const int GetNumBlockHorizontal();
+	const int GetNumBlockVertical();
+	/*const float GetBlockWidth();
+	const float GetBlockHeight();*/
 };
 
