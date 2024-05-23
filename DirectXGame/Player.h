@@ -13,7 +13,7 @@ public:
 	~Player();
 
 	//初期化処理
-	void Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection);
+	void Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection, const Vector3& position);
 
 	//更新処理
 	void Update();
@@ -35,4 +35,7 @@ private:
 
 	ViewProjection* viewProjection_ = nullptr;
 
+	//速度
+	myVector3 velocity_ = {};
+	static inline const float kAcceleration = 0.01f;
 };

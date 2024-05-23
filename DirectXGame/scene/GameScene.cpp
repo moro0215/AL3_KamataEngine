@@ -36,7 +36,7 @@ void GameScene::GenerateBlocks() {
 				WorldTransform* worldTransform = new WorldTransform();
 				worldTransform->Initialize();
 				worldTransformBlocks_[i][j] = worldTransform;
-				worldTransformBlocks_[i][j]->translation_ = mapChipField_->GetMapChipPositionByIndex(j, i);
+				worldTransformBlocks_[i][j]->translation_ = (myVector3)mapChipField_->GetMapChipPositionByIndex(j, i);
 			}
 		}
 	}
@@ -82,8 +82,10 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 	// 自キャラの生成
 	player_ = new Player();
+	//座標をマップチップ番号で指定
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,18);
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_, &viewProjection_);
+	player_->Initialize(model_, textureHandle_, &viewProjection_,playerPosition);
 
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();

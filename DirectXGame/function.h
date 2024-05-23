@@ -245,10 +245,10 @@ Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 };
 
 // 平行移動行列
-Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
+Matrix4x4 MakeTranslateMatrix(myVector3 translate) {
 	Matrix4x4 T = {
 	    T.m[0][0] = 1, T.m[0][1] = 0, T.m[0][2] = 0, T.m[0][3] = 0, T.m[1][0] = 0,           T.m[1][1] = 1,           T.m[1][2] = 0,           T.m[1][3] = 0,
-	    T.m[2][0] = 0, T.m[2][1] = 0, T.m[2][2] = 1, T.m[2][3] = 0, T.m[3][0] = translate.x, T.m[3][1] = translate.y, T.m[3][2] = translate.z, T.m[3][3] = 1,
+	    T.m[2][0] = 0, T.m[2][1] = 0, T.m[2][2] = 1, T.m[2][3] = 0, T.m[3][0] = translate.mValue.x, T.m[3][1] = translate.mValue.y, T.m[3][2] = translate.mValue.z, T.m[3][3] = 1,
 	};
 	return T;
 };
@@ -279,7 +279,7 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 };
 
 // アフィン変換行列
-Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, myVector3 translate) {
 	Matrix4x4 S = MakeScaleMatrix(scale);
 	Matrix4x4 R = MakeRotateXYZMatrix(rotate);
 	Matrix4x4 T = MakeTranslateMatrix(translate);
