@@ -46,4 +46,21 @@ private:
 		kLeft,
 	};
 	LRDirection lrDirection_ = LRDirection::kRight;
+	//旋回開始時の角度
+	float turnFirstRotationY_ = 0.0f;
+	//旋回タイマー
+	float turnTimer_ = 0.0f;
+	//旋回時間（秒）
+	static inline const float kTimeTurn = 1.0f;
+
+	//接地状態フラグ
+	bool onGround_ = true;
+	//重力加速度
+	static inline const float kGravityAcceleration = 0.01f;
+	//最大落下速度
+	static inline const float kLimitFallSpeed = 1.0f;
+	//ジャンプ初速
+	static inline const float kJumpAcceleration = 0.1f;
+
+	static inline const float kAttenuationLanding = 0.1f;
 };
