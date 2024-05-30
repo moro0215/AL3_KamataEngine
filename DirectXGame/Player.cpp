@@ -30,20 +30,20 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 void Player::Update() {
 	//行列を定数バッファーに転送
 	worldTransform_.UpdateMatrix();
+	turnFirstRotationY_ = worldTransform_.rotation_.y;
 	//旋回制御
 	if (turnTimer_ > 0.0f) {
-		turnTimer_ -= 1 / 60;
+		turnTimer_ -= (1.0f / 60.0f);
+		// イージング
+		float timeRotation = (1.0f - turnTimer_) / kTimeTurn;
+		float easing = easeOutSine(timeRotation);
+
 		// 左右の自キャラ角度テーブル
 		float destinationRotationYTable[] = {std::numbers::pi_v<float> * 5.0f / 2.0f, std::numbers::pi_v<float> * 3.0f / 2.0f};
 		// 状況に応じた角度の取得
 		float destinationRotationY = destinationRotationYTable[static_cast<uint32_t>(lrDirection_)];
-		//イージング
-		float frameX = 0;
-		float endFrameX = 120;
-		float easing = frameX / endFrameX;
-		destinationRotationY = easeOutSine(easing);
 		// 自キャラの角度を設定
-		worldTransform_.rotation_.y = destinationRotationY;
+		worldTransform_.rotation_.y = turnFirstRotationY_ + (destinationRotationY - turnFirstRotationY_) * easing;
 
 	}
 	//接地状態
@@ -65,7 +65,7 @@ void Player::Update() {
 					// 旋回開始時の角度の記録
 					turnFirstRotationY_ = std::numbers::pi_v<float> * 5.0f / 2.0f;
 					// 旋回タイマーに時間を記録
-					turnTimer_ = 5.0f;
+					turnTimer_ = 1.0f;
 				}
 			} else if (Input::GetInstance()->PushKey(DIK_LEFT)) {
 				// 右移動中の右入力
@@ -80,7 +80,7 @@ void Player::Update() {
 					// 旋回開始時の角度の記録
 					turnFirstRotationY_ = std::numbers::pi_v<float> * 3.0f / 2.0f;
 					// 旋回タイマーに時間を記録
-					turnTimer_ = 5.0f;
+					turnTimer_ = 1.0f;
 				}
 			}
 
