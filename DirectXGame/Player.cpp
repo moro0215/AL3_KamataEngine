@@ -4,6 +4,11 @@
 #include <numbers>
 #include <Input.h>
 #include <algorithm>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+
+float easeOutSine(float x) { return sinf((x * (float)M_PI) / 2); }
 
 // コンストラクタ
 Player::Player(){};
@@ -32,6 +37,11 @@ void Player::Update() {
 		float destinationRotationYTable[] = {std::numbers::pi_v<float> * 5.0f / 2.0f, std::numbers::pi_v<float> * 3.0f / 2.0f};
 		// 状況に応じた角度の取得
 		float destinationRotationY = destinationRotationYTable[static_cast<uint32_t>(lrDirection_)];
+		//イージング
+		float frameX = 0;
+		float endFrameX = 120;
+		float easing = frameX / endFrameX;
+		destinationRotationY = easeOutSine(easing);
 		// 自キャラの角度を設定
 		worldTransform_.rotation_.y = destinationRotationY;
 
@@ -55,7 +65,7 @@ void Player::Update() {
 					// 旋回開始時の角度の記録
 					turnFirstRotationY_ = std::numbers::pi_v<float> * 5.0f / 2.0f;
 					// 旋回タイマーに時間を記録
-					turnTimer_ = 1.0f;
+					turnTimer_ = 5.0f;
 				}
 			} else if (Input::GetInstance()->PushKey(DIK_LEFT)) {
 				// 右移動中の右入力
@@ -70,7 +80,7 @@ void Player::Update() {
 					// 旋回開始時の角度の記録
 					turnFirstRotationY_ = std::numbers::pi_v<float> * 3.0f / 2.0f;
 					// 旋回タイマーに時間を記録
-					turnTimer_ = 1.0f;
+					turnTimer_ = 5.0f;
 				}
 			}
 
@@ -116,7 +126,7 @@ void Player::Update() {
 		//着地
 		if (landing) {
 			//めりこみ排斥
-			worldTransform_.translation_.mValue.y = 1.0f;
+			worldTransform_.translation_.mValue.y = 2.0f;
 			velocity_.mValue.x *= (1.0f - kAttenuationLanding);
 			velocity_.mValue.y = 0.0f;
 			onGround_ = true;
