@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 #include "skydome.h"
 #include "MapChipField.h"
+#include "CameraController.h"
 
 
 /// <summary>
@@ -85,4 +86,7 @@ private: // メンバ変数
 
 	//マップチップフィールド
 	MapChipField* mapChipField_;
+
+	//追従カメラ
+	CameraController* cameraController_ = nullptr;
 };

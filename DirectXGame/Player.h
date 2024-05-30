@@ -21,6 +21,8 @@ public:
 	//描画処理
 	void Draw();
 
+	const WorldTransform& GetWorldTransform();
+
 private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;

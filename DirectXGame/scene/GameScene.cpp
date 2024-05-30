@@ -61,6 +61,7 @@ GameScene::~GameScene() {
 	delete skydome_;
 	delete modelSkydome_;
 	delete mapChipField_;
+	delete cameraController_;
 }
 
 void GameScene::Initialize() {
@@ -100,11 +101,13 @@ void GameScene::Initialize() {
 
 	//天球の生成
 	skydome_ = new Skydome();
-	// 天球の3Dモデルの生成
+	//天球の3Dモデルの生成
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	//天球の初期化
 	skydome_->Initialize(modelSkydome_,&viewProjection_);
 
+	//追従カメラ
+	cameraController_ = new CameraController();
 	
 
 }
