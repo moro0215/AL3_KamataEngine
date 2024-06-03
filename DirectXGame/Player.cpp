@@ -20,7 +20,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = (myVector3)position;
+	worldTransform_.translation_ = (Vector3)position;
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> * 5.0f / 2.0f;
 	textureHandle_ = textureHandle;
 	viewProjection_ = viewProjection;
@@ -50,14 +50,14 @@ void Player::Update() {
 		// 移動入力
 		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT)) {
 			// 左右加速
-			myVector3 acceleration = {};
+			Vector3 acceleration = {};
 			if (Input::GetInstance()->PushKey(DIK_RIGHT)) {
 				// 左移動中の右入力
-				if (velocity_.mValue.x < 0.0f) {
+				if (velocity_.x < 0.0f) {
 					// 速度と逆方向に入力中は急ブレーキ
-					velocity_.mValue.x *= (1.0f - kAttenuation);
+					velocity_.x *= (1.0f - kAttenuation);
 				}
-				acceleration.mValue.x += kAcceleration;
+				acceleration.x += kAcceleration;
 				// 右向きに
 				if (lrDirection_ != LRDirection::kRight) {
 					lrDirection_ = LRDirection::kRight;
@@ -68,11 +68,11 @@ void Player::Update() {
 				}
 			} else if (Input::GetInstance()->PushKey(DIK_LEFT)) {
 				// 右移動中の右入力
-				if (velocity_.mValue.x > 0.0f) {
+				if (velocity_.x > 0.0f) {
 					// 速度と逆方向に入力中は急ブレーキ
-					velocity_.mValue.x *= (1.0f - kAttenuation);
+					velocity_.x *= (1.0f - kAttenuation);
 				}
-				acceleration.mValue.x -= kAcceleration;
+				acceleration.x -= kAcceleration;
 				// 左向きに
 				if (lrDirection_ != LRDirection::kLeft) {
 					lrDirection_ = LRDirection::kLeft;
@@ -86,23 +86,23 @@ void Player::Update() {
 			// 加速減速
 			velocity_ += acceleration;
 			// 速度制限
-			velocity_.mValue.x = std::clamp(velocity_.mValue.x, -kLimitRunSpeed, kLimitRunSpeed);
+			velocity_.x = std::clamp(velocity_.x, -kLimitRunSpeed, kLimitRunSpeed);
 
 		} else {
 			// 移動減衰
-			velocity_.mValue.x *= (1.0f - kAttenuation);
+			velocity_.x *= (1.0f - kAttenuation);
 		}
 		// ジャンプ
 		if (Input::GetInstance()->PushKey(DIK_UP)) {
-			myVector3 jumpAcceleration{0.0f, kJumpAcceleration, 0.0f};
+			Vector3 jumpAcceleration{0.0f, kJumpAcceleration, 0.0f};
 			velocity_ += jumpAcceleration;
 		}
 	} else {
 		// 落下速度
-		myVector3 gravityAcceleration{0.0f, -kGravityAcceleration, 0};
+		Vector3 gravityAcceleration{0.0f, -kGravityAcceleration, 0};
 		velocity_ += gravityAcceleration;
 		// 落下速度制限
-		velocity_.mValue.y = std::max(velocity_.mValue.y, -kLimitFallSpeed);
+		velocity_.y = std::max(velocity_.y, -kLimitFallSpeed);
 	}
 	// 移動
 	worldTransform_.translation_ += velocity_;
@@ -110,24 +110,24 @@ void Player::Update() {
 	// 着地フラグ
 	bool landing = false;
 	// 地面と当たり判定
-	if (velocity_.mValue.y < 0) {
-		if (worldTransform_.translation_.mValue.y <= 1.0f) {
+	if (velocity_.y < 0) {
+		if (worldTransform_.translation_.y <= 1.0f) {
 			landing = true;
 		}
 	}
 	// 接地判定
 	if (onGround_) {
 		// ジャンプ開始
-		if (velocity_.mValue.y > 0.0f) {
+		if (velocity_.y > 0.0f) {
 			onGround_ = false;
 		}
 	} else {
 		// 着地
 		if (landing) {
 			// めりこみ排斥
-			worldTransform_.translation_.mValue.y = 2.0f;
-			velocity_.mValue.x *= (1.0f - kAttenuationLanding);
-			velocity_.mValue.y = 0.0f;
+			worldTransform_.translation_.y = 2.0f;
+			velocity_.x *= (1.0f - kAttenuationLanding);
+			velocity_.y = 0.0f;
 			onGround_ = true;
 		}
 	}

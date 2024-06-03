@@ -36,7 +36,7 @@ void GameScene::GenerateBlocks() {
 				WorldTransform* worldTransform = new WorldTransform();
 				worldTransform->Initialize();
 				worldTransformBlocks_[i][j] = worldTransform;
-				worldTransformBlocks_[i][j]->translation_ = (myVector3)mapChipField_->GetMapChipPositionByIndex(j, i);
+				worldTransformBlocks_[i][j]->translation_ = (Vector3)mapChipField_->GetMapChipPositionByIndex(j, i);
 			}
 		}
 	}
@@ -95,21 +95,25 @@ void GameScene::Initialize() {
 	// ブロックの生成
 	GenerateBlocks();
 
+	// 天球の生成
+	skydome_ = new Skydome();
+	// 天球の3Dモデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	// 天球の初期化
+	skydome_->Initialize(modelSkydome_, &viewProjection_);
+
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	debugCamera_->SetFarZ(3000);
 
-	//天球の生成
-	skydome_ = new Skydome();
-	//天球の3Dモデルの生成
-	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
-	//天球の初期化
-	skydome_->Initialize(modelSkydome_,&viewProjection_);
-
+	
 	//追従カメラ
 	cameraController_ = new CameraController();
+	cameraController_->Initialize(&viewProjection_);
+	cameraController_->SetTarget(player_);
+	cameraController_->Reset();
 	
-
+	//cameraController_->SetMovableArea(movableArea_);
 }
 
 void GameScene::Update() {
@@ -128,6 +132,9 @@ void GameScene::Update() {
 		}
 	}
 	
+	// 天球の更新
+	skydome_->Update();
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {
 		if (isDebugCameraActive_) {
@@ -150,8 +157,18 @@ void GameScene::Update() {
 		viewProjection_.UpdateMatrix();
 	}
 
-	//天球の更新
-	skydome_->Update();
+	
+	if (cameraController_) {
+		// 追従カメラの更新
+		cameraController_->Update();
+		viewProjection_.matView = cameraController_->GetViewProjection().matView;
+		viewProjection_.matProjection = cameraController_->GetViewProjection().matProjection;
+		// ビュープロジェクション行列の転送
+		viewProjection_.TransferMatrix();
+	} else {
+		// ビュープロジェクション行列の更新と転送
+		viewProjection_.UpdateMatrix();
+	}
 }
 
 void GameScene::Draw() {
