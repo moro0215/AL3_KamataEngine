@@ -6,6 +6,19 @@ CameraController::CameraController() {}
 
 CameraController::~CameraController() {}
 
+Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
+
+	Vector3 p = {0, 0, 0};
+
+	float x = t * a.x + (1.0f - t) * b.x;
+	float y = t * a.y + (1.0f - t) * b.y;
+	float z = t * a.z + (1.0f - t) * b.z;
+
+	p = {x, y, z};
+
+	return p;
+}
+
 void CameraController::Initialize(ViewProjection* viewProjection) { 
 
 	viewProjection_ = viewProjection; 
@@ -15,9 +28,12 @@ void CameraController::Initialize(ViewProjection* viewProjection) {
 void CameraController::Update() {
 	//// 追跡対象のワールドトランスフォームを参照
 	const WorldTransform& targetWorldTransform = target_->GetWorldTransform();
-	// 追跡対象とオフセットからカメラの座標を計算
-	viewProjection_->translation_ = targetWorldTransform.translation_ + targetOffset_;
+	// 追跡対象とオフセットからカメラの目標座標を計算
+	goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_;
 	
+	//座標補間によりゆったり追従
+	viewProjection_->translation_ = Lerp(viewProjection_->translation_, goalCoordinate_, kInterpolationRate);
+
 	//移動範囲制限
 	float vx = viewProjection_->translation_.x;
 	float vy = viewProjection_->translation_.y;

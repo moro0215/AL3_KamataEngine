@@ -37,4 +37,10 @@ private:
 
 	//カメラ移動範囲
 	Rect movableArea_ = {0, 100, 0, 100};
+
+	//カメラの目標座標
+	Vector3 goalCoordinate_ = {200, 100, 0};
+	//座標補間割合
+	static inline const float kInterpolationRate = 0.8f;
+
 };
