@@ -5,6 +5,13 @@ class Player;
 class CameraController {
 public:
 
+		struct Rect {
+		float left = 0.0f;
+		float right = 1.0f;
+		float bottom = 0.0f;
+		float top = 1.0f;
+	};
+
 	CameraController();
 	~CameraController();
 
@@ -18,7 +25,7 @@ public:
 
 	const ViewProjection& GetViewProjection() { return *viewProjection_; };
 
-	//void SetMovableArea(struct Rect area);
+	void SetMovableArea(Rect& area);
 
 private:
 	//ビュープロジェクション
@@ -28,12 +35,6 @@ private:
 
 	Vector3 targetOffset_ = {0, 0, -50.0f};
 
-	struct Rect {
-		float left = 0.0f;
-		float right = 1.0f;
-		float bottom = 0.0f;
-		float top = 1.0f;
-	};
 	//カメラ移動範囲
 	Rect movableArea_ = {0, 100, 0, 100};
 };

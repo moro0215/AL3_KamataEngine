@@ -19,10 +19,10 @@ void CameraController::Update() {
 	viewProjection_->translation_ = targetWorldTransform.translation_ + targetOffset_;
 	
 	//移動範囲制限
-	/*viewProjection_->translation_.x = std::clamp(viewProjection_->translation_.x, movableArea_.left);
-	viewProjection_->translation_.x = std::clamp(viewProjection_->translation_.x, movableArea_.right);
-	viewProjection_->translation_.y = std::clamp(viewProjection_->translation_.y, movableArea_.bottom);
-	viewProjection_->translation_.y = std::clamp(viewProjection_->translation_.y, movableArea_.top);*/
+	float vx = viewProjection_->translation_.x;
+	float vy = viewProjection_->translation_.y;
+	viewProjection_->translation_.x = std::clamp(vx,movableArea_.left, movableArea_.right);
+	viewProjection_->translation_.y = std::clamp(vy,movableArea_.bottom, movableArea_.top);
 
 	//行列の更新
 	viewProjection_->UpdateMatrix();
@@ -38,4 +38,4 @@ void CameraController::Reset() {
 
 }
 
-//void CameraController::SetMovableArea(struct Rect area) { movableArea_ = area; };
+void CameraController::SetMovableArea(Rect& area) { movableArea_ = area; };

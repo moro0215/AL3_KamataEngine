@@ -89,4 +89,5 @@ private: // メンバ変数
 
 	//追従カメラ
 	CameraController* cameraController_ = nullptr;
+
 };
