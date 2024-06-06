@@ -43,4 +43,7 @@ private:
 	//座標補間割合
 	static inline const float kInterpolationRate = 0.8f;
 
+	//速度掛け率
+	static inline const float kVelocityBias = 1.0f;
+
 };

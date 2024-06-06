@@ -26,11 +26,11 @@ void CameraController::Initialize(ViewProjection* viewProjection) {
 }
 
 void CameraController::Update() {
+	Vector3 targetVolocity = target_->GetVelocity();
 	//// 追跡対象のワールドトランスフォームを参照
 	const WorldTransform& targetWorldTransform = target_->GetWorldTransform();
-	// 追跡対象とオフセットからカメラの目標座標を計算
-	goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_;
-	
+	// 追跡対象とオフセットと追従対象の速度からカメラの目標座標を計算
+	goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_ + targetVolocity * kVelocityBias;
 	//座標補間によりゆったり追従
 	viewProjection_->translation_ = Lerp(viewProjection_->translation_, goalCoordinate_, kInterpolationRate);
 

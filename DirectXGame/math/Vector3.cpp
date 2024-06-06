@@ -9,9 +9,26 @@ Vector3& Vector3::operator+=(const Vector3& rhs) {
 	return *this;
 }
 
+Vector3& Vector3::operator*=(float a) {
+	// TODO: return ステートメントをここに挿入します
+	x *= a;
+	y *= a;
+	z *= a;
+	return *this;
+}
+
+
+
 Vector3& operator+(const Vector3& mValue1, const Vector3& mValue2) {
 	// TODO: return ステートメントをここに挿入します
 	return Vector3 (mValue1) += mValue2;
 }
+
+Vector3& operator*(const Vector3& mValue1, float a) {
+	return Vector3(mValue1) *= a;
+	
+}
+
+
 
 
