@@ -36,14 +36,18 @@ private:
 	Vector3 targetOffset_ = {0, 0, -50.0f};
 
 	//カメラ移動範囲
-	Rect movableArea_ = {0, 100, 0, 100};
+	Rect movableArea_ = {25.0f, 180.0f, 0.0f, 100.0f};
 
 	//カメラの目標座標
-	Vector3 goalCoordinate_ = {200, 100, 0};
+	Vector3 goalCoordinate_ = {100.0f, 100.0f, 100.0f};
 	//座標補間割合
 	static inline const float kInterpolationRate = 0.8f;
 
 	//速度掛け率
-	static inline const float kVelocityBias = 1.0f;
+	static inline const float kVelocityBias = 20.0f;
+	//追従対象の各方向へのカメラの移動範囲
+	static inline const Rect margin_{
+	    0.0f, 200.0f, 0.0f, 200.0f
+	};
 
 };

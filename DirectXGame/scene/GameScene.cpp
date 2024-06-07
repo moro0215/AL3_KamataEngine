@@ -112,7 +112,8 @@ void GameScene::Initialize() {
 	cameraController_->Initialize(&viewProjection_);
 	cameraController_->SetTarget(player_);
 	cameraController_->Reset();
-	CameraController::Rect movableArea_ = {25, 180, 0, 100};
+
+	CameraController::Rect movableArea_ = {25.0f, 180.0f, 0.0f, 100.0f};
 	cameraController_->SetMovableArea(movableArea_);
 }
 
