@@ -72,6 +72,10 @@ const int MapChipField::GetNumBlockHorizontal() { return kNumBlockHorizontal; }
 
 const int MapChipField::GetNumBlockVertical() { return kNumBlockVertical; }
 
-//const float MapChipField::GetBlockWidth() { return kBlockWidth; }
-//
-//const float MapChipField::GetBlockHeight() { return kBlockHeight; }
+MapChipField::IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
+	IndexSet indexSet = {};
+	indexSet.xIndex = static_cast<int32_t>(position.x + kBlockWidth / 2) / kBlockWidth;
+	indexSet.yIndex = static_cast<int32_t>(kNumBlockVertical - 1 - ((position.y + kBlockHeight / 2) / kBlockHeight));
+	return indexSet;
+}
+

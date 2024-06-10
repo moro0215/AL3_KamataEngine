@@ -81,12 +81,15 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
 	viewProjection_.Initialize();
+
+	// 座標をマップチップ番号で指定
+	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1, 18);
 	// 自キャラの生成
 	player_ = new Player();
-	//座標をマップチップ番号で指定
-	Vector3 playerPosition = mapChipField_->GetMapChipPositionByIndex(1,18);
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_, &viewProjection_,playerPosition);
+
+	player_->SetMapChipField(mapChipField_);
 
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();

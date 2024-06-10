@@ -49,6 +49,16 @@ void Player::Update() {
 	if (onGround_) {
 		// 移動入力
 		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT)) {
+			
+			// 衝突情報を初期化
+			CollisionMapInfo collisionMapInfo;
+			// 移動量に速度の値をコピー
+			collisionMapInfo.move = velocity_;
+
+			// マップ衝突チェック
+			MapCollision(collisionMapInfo);
+
+			
 			// 左右加速
 			Vector3 acceleration = {};
 			if (Input::GetInstance()->PushKey(DIK_RIGHT)) {
@@ -134,6 +144,9 @@ void Player::Update() {
 
 	// 行列計算
 	worldTransform_.UpdateMatrix();
+
+	
+
 }
 
 void Player::Draw() {
@@ -142,3 +155,47 @@ void Player::Draw() {
 }
 
 const WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
+
+void Player::MapCollision(CollisionMapInfo& info) { 
+	MapCollisionTop(info);
+	MapCollisionBottom(info);
+	MapCollisionRight(info);
+	MapCollisionLeft(info);
+
+	MapChipType mapChipType;
+	//真上の当たり判定
+	bool hit = false;
+	//左上点の当たり判定
+	IndexSet indexSet;
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kLeftTop]);
+	mapChipType = mapChipField->GetMapChipIndexSetByIndex(indexSet.xIndex, indexSet.yIndex);
+	if (mapChipType == MapChipType::kBlock) {
+		hit = true;
+	}
+}
+
+void Player::MapCollisionTop(CollisionMapInfo& info) {
+	if (info.move.y <= 0) {
+		return;
+	}
+	//移後後の4つの角の座標
+	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionNew;
+	for (uint32_t i = 0; i < positionNew.size(); ++i) {
+		positionNew[i] = CornerPosition(worldTransform_.translation_ + info.move, static_cast<Corner>(i));
+	}
+	
+}
+void Player::MapCollisionBottom(CollisionMapInfo& info) {}
+void Player::MapCollisionRight(CollisionMapInfo& info) {}
+void Player::MapCollisionLeft(CollisionMapInfo& info) {}
+
+Vector3 Player::CornerPosition(const Vector3& center, Corner corner) {
+
+	Vector3 offsetTable[static_cast<uint32_t>(Corner::kNumCorner)] = {
+	    {+kWidth / 2.0f, -kHeight / 2.0f, 0},
+	    {-kWidth / 2.0f, -kHeight / 2.0f, 0},
+	    {+kWidth / 2.0f, +kHeight / 2.0f, 0},
+	    {-kWidth / 2.0f, +kHeight / 2.0f, 0},
+	};
+	return center + offsetTable[static_cast<uint32_t>(corner)];
+}

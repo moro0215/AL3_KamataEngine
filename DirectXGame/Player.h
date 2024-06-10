@@ -2,10 +2,30 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+#include "MapChipField.h"
 
 class Player {
+	class MapChipField;
 
 public:
+	//マップとの当たり判定情報
+	struct CollisionMapInfo {
+		bool ceiling = false;
+		bool landing = false;
+		bool hitWall = false;
+		Vector3 move;
+	};
+
+	// 角
+	enum class Corner {
+		kRightBottom, // 右下
+		kLeftBottom,  // 左下
+		kRightTop,    // 右上
+		kLeftTop,     // 右下
+
+		kNumCorner // 要素数
+	};
+
 	//コンストラクタ
 	Player();
 
@@ -26,6 +46,17 @@ public:
 	//速度入手
 	const Vector3& GetVelocity() const { return velocity_; }
 
+	void SetMapChipField(MapChipField* mapChipField) {mapChipField_;}
+
+	//マップ衝突判定
+	void MapCollision(CollisionMapInfo& info);
+	void MapCollisionTop(CollisionMapInfo& info);
+	void MapCollisionBottom(CollisionMapInfo& info);
+	void MapCollisionRight(CollisionMapInfo& info);
+	void MapCollisionLeft(CollisionMapInfo& info);
+
+	//角の座標計算
+	Vector3 CornerPosition(const Vector3& center, Corner corner);
 
 private:
 	//ワールド変換データ
@@ -70,5 +101,12 @@ private:
 
 	static inline const float kAttenuationLanding = 0.5f;
 
+	//マップチップによるフィールド
+	MapChipField* mapChipField_ = nullptr;
 
+	//キャラクターの当たり判定サイズ
+	static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
+
+	
 };

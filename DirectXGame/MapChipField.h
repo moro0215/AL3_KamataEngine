@@ -13,6 +13,12 @@ struct MapChipData {
 };
 
 class MapChipField {
+
+	struct IndexSet {
+		uint32_t xIndex;
+		uint32_t yIndex;
+	};
+
 private:
 	//1ブロックのサイズ
 	static inline const float kBlockWidth = 2.0f;
@@ -34,7 +40,9 @@ public:
 
 	const int GetNumBlockHorizontal();
 	const int GetNumBlockVertical();
-	/*const float GetBlockWidth();
-	const float GetBlockHeight();*/
+
+	//マップチップ番号を計算
+	IndexSet GetMapChipIndexSetByPosition(const Vector3& position);
+
 };
 
