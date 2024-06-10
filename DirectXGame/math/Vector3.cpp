@@ -19,9 +19,13 @@ Vector3& Vector3::operator*=(float a) {
 
 
 
-Vector3& operator+(const Vector3& mValue1, const Vector3& mValue2) {
-	// TODO: return ステートメントをここに挿入します
-	return Vector3 (mValue1) += mValue2;
+Vector3 operator+(const Vector3& mValue1, const Vector3& mValue2) {
+	Vector3 result = {};
+	result.x = mValue1.x + mValue2.x;
+	result.y = mValue1.y + mValue2.y;
+	result.z = mValue1.z + mValue2.z;
+	
+	return result;
 }
 
 Vector3& operator*(const Vector3& mValue1, float a) {

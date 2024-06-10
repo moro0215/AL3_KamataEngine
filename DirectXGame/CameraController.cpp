@@ -30,8 +30,7 @@ void CameraController::Update() {
 	//// 追跡対象のワールドトランスフォームを参照
 	const WorldTransform& targetWorldTransform = target_->GetWorldTransform();
 	// 追跡対象とオフセットと追従対象の速度からカメラの目標座標を計算
-	//goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_ + targetVolocity * kVelocityBias;
-	goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_;
+	goalCoordinate_ = targetWorldTransform.translation_ + targetOffset_ + targetVolocity * kVelocityBias;
 	
 	//座標補間によりゆったり追従
 	viewProjection_->translation_ = Lerp(viewProjection_->translation_, goalCoordinate_, kInterpolationRate);
@@ -44,9 +43,6 @@ void CameraController::Update() {
 	viewProjection_->translation_.y = std::clamp(vy, movableArea_.bottom, movableArea_.top);
 
 	// 追従対象が画面外に出ないように補正
-	/*viewProjection_->translation_.x = std::clamp(vx, target_->GetWorldTransform().translation_.x + margin_.left, target_->GetWorldTransform().translation_.x + margin_.right);
-	viewProjection_->translation_.y = std::clamp(vy, target_->GetWorldTransform().translation_.y + margin_.bottom, target_->GetWorldTransform().translation_.y + margin_.top);
-	*/
 	viewProjection_->translation_.x = std::clamp(vx,margin_.left, margin_.right);
 	viewProjection_->translation_.y = std::clamp(vy, margin_.bottom, margin_.top);
 	
