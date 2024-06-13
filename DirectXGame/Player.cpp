@@ -6,6 +6,7 @@
 #include <numbers>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "MapChipField.h"
 
 float easeOutSine(float x) { return sinf((x * (float)M_PI) / 2); }
 
@@ -156,6 +157,8 @@ void Player::Draw() {
 
 const WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
 
+void Player::SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
+
 void Player::MapCollision(CollisionMapInfo& info) { 
 	MapCollisionTop(info);
 	MapCollisionBottom(info);
@@ -168,7 +171,7 @@ void Player::MapCollision(CollisionMapInfo& info) {
 	//左上点の当たり判定
 	IndexSet indexSet;
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kLeftTop]);
-	mapChipType = mapChipField->GetMapChipIndexSetByIndex(indexSet.xIndex, indexSet.yIndex);
+	mapChipType = mapChipField_->GetMapChipIndexSetByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}

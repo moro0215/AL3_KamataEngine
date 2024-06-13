@@ -72,10 +72,23 @@ const int MapChipField::GetNumBlockHorizontal() { return kNumBlockHorizontal; }
 
 const int MapChipField::GetNumBlockVertical() { return kNumBlockVertical; }
 
-MapChipField::IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
+IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	IndexSet indexSet = {};
 	indexSet.xIndex = static_cast<int32_t>(position.x + kBlockWidth / 2) / kBlockWidth;
 	indexSet.yIndex = static_cast<int32_t>(kNumBlockVertical - 1 - ((position.y + kBlockHeight / 2) / kBlockHeight));
 	return indexSet;
+}
+
+MapChipField::Rect MapChipField::GetRectByIndex(uint32_t xIndex, uint32_t yIndex) {
+	//指定ブロックの中心座標を取得する
+	Vector3 center = GetMapChipPositionByIndex(xIndex, yIndex); 
+
+	Rect rect;
+	rect.left = center.x - kBlockWidth / 2.0f;
+	rect.right = center.x + kBlockWidth / 2.0f;
+	rect.bottom = center.y + kBlockHeight / 2.0f;
+	rect.top = center.y - kBlockHeight / 2.0f;
+
+	return rect;
 }
 

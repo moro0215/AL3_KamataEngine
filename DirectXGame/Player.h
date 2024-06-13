@@ -4,8 +4,9 @@
 #include "ViewProjection.h"
 #include "MapChipField.h"
 
+class MapChipField;
+
 class Player {
-	class MapChipField;
 
 public:
 	//マップとの当たり判定情報
@@ -46,7 +47,7 @@ public:
 	//速度入手
 	const Vector3& GetVelocity() const { return velocity_; }
 
-	void SetMapChipField(MapChipField* mapChipField) {mapChipField_;}
+	void SetMapChipField(MapChipField* mapChipField);
 
 	//マップ衝突判定
 	void MapCollision(CollisionMapInfo& info);
