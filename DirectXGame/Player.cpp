@@ -170,8 +170,8 @@ void Player::MapCollision(CollisionMapInfo& info) {
 	bool hit = false;
 	//左上点の当たり判定
 	IndexSet indexSet;
-	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[kLeftTop]);
-	mapChipType = mapChipField_->GetMapChipIndexSetByIndex(indexSet.xIndex, indexSet.yIndex);
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[Player::Corner::kLeftTop]);
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}

@@ -74,7 +74,7 @@ const int MapChipField::GetNumBlockVertical() { return kNumBlockVertical; }
 
 IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	IndexSet indexSet = {};
-	indexSet.xIndex = static_cast<int32_t>(position.x + kBlockWidth / 2) / kBlockWidth;
+	indexSet.xIndex = static_cast<int32_t>(position.x + kBlockWidth / 2) / (int32_t)kBlockWidth;
 	indexSet.yIndex = static_cast<int32_t>(kNumBlockVertical - 1 - ((position.y + kBlockHeight / 2) / kBlockHeight));
 	return indexSet;
 }
