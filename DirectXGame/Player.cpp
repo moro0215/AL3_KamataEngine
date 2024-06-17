@@ -161,20 +161,9 @@ void Player::SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapCh
 
 void Player::MapCollision(CollisionMapInfo& info) { 
 	MapCollisionTop(info);
-	MapCollisionBottom(info);
+	/*MapCollisionBottom(info);
 	MapCollisionRight(info);
-	MapCollisionLeft(info);
-
-	MapChipType mapChipType;
-	//真上の当たり判定
-	bool hit = false;
-	//左上点の当たり判定
-	IndexSet indexSet;
-	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[Player::Corner::kLeftTop]);
-	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
-	if (mapChipType == MapChipType::kBlock) {
-		hit = true;
-	}
+	MapCollisionLeft(info);*/
 }
 
 void Player::MapCollisionTop(CollisionMapInfo& info) {
@@ -186,11 +175,39 @@ void Player::MapCollisionTop(CollisionMapInfo& info) {
 	for (uint32_t i = 0; i < positionNew.size(); ++i) {
 		positionNew[i] = CornerPosition(worldTransform_.translation_ + info.move, static_cast<Corner>(i));
 	}
-	
+	MapChipType mapChipType;
+	// 真上の当たり判定
+	bool hit = false;
+
+	// 左上点の当たり判定
+	IndexSet indexSet;
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kLeftTop)]);
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
+	if (mapChipType == MapChipType::kBlock) {
+		hit = true;
+	}
+	// 右上点の当たり判定
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kRightTop)]);
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
+	if (mapChipType == MapChipType::kBlock) {
+		hit = true;
+	}
+	float moveY=info.move.y;
+	//ブロックにヒット
+	if (hit) {
+		//めり込みを排除する方向に移動量を設定
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_+info.move);
+		//めり込み先ブロックの範囲矩形
+		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
+		info.move.y = std::max(0.0f, moveY);
+		//天井に当たったことを記録する	
+		info.ceiling = true;
+	}
+
 }
-void Player::MapCollisionBottom(CollisionMapInfo& info) {}
-void Player::MapCollisionRight(CollisionMapInfo& info) {}
-void Player::MapCollisionLeft(CollisionMapInfo& info) {}
+//void Player::MapCollisionBottom(CollisionMapInfo& info) {}
+//void Player::MapCollisionRight(CollisionMapInfo& info) {}
+//void Player::MapCollisionLeft(CollisionMapInfo& info) {}
 
 Vector3 Player::CornerPosition(const Vector3& center, Corner corner) {
 

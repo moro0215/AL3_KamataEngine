@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-#include "MapChipField.h"
+
 
 class MapChipField;
 
@@ -11,10 +11,10 @@ class Player {
 public:
 	//マップとの当たり判定情報
 	struct CollisionMapInfo {
-		bool ceiling = false;
-		bool landing = false;
-		bool hitWall = false;
-		Vector3 move;
+		bool ceiling = false;//天井
+		bool landing = false;//着地
+		bool hitWall = false;//壁
+		Vector3 move;//移動量
 	};
 
 	// 角
@@ -52,9 +52,9 @@ public:
 	//マップ衝突判定
 	void MapCollision(CollisionMapInfo& info);
 	void MapCollisionTop(CollisionMapInfo& info);
-	void MapCollisionBottom(CollisionMapInfo& info);
+	/*void MapCollisionBottom(CollisionMapInfo& info);
 	void MapCollisionRight(CollisionMapInfo& info);
-	void MapCollisionLeft(CollisionMapInfo& info);
+	void MapCollisionLeft(CollisionMapInfo& info);*/
 
 	//角の座標計算
 	Vector3 CornerPosition(const Vector3& center, Corner corner);
@@ -108,6 +108,8 @@ private:
 	//キャラクターの当たり判定サイズ
 	static inline const float kWidth = 0.8f;
 	static inline const float kHeight = 0.8f;
+
+	static inline const float kBlank = 1.0f;
 
 	
 };
