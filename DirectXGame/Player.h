@@ -52,8 +52,8 @@ public:
 	//マップ衝突判定
 	void MapCollision(CollisionMapInfo& info);
 	void MapCollisionTop(CollisionMapInfo& info);
-	/*void MapCollisionBottom(CollisionMapInfo& info);
-	void MapCollisionRight(CollisionMapInfo& info);
+	void MapCollisionBottom(CollisionMapInfo& info);
+	/*void MapCollisionRight(CollisionMapInfo& info);
 	void MapCollisionLeft(CollisionMapInfo& info);*/
 
 	//角の座標計算
@@ -100,7 +100,8 @@ private:
 	//ジャンプ初速
 	static inline const float kJumpAcceleration = 0.5f;
 
-	static inline const float kAttenuationLanding = 0.5f;
+	// 着地時の速度減衰率
+	static inline const float kAttenuationLanding = 1.0f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
@@ -111,5 +112,4 @@ private:
 
 	static inline const float kBlank = 1.0f;
 
-	
 };
