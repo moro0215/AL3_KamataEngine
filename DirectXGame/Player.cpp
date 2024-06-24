@@ -46,20 +46,19 @@ void Player::Update() {
 		// 自キャラの角度を設定
 		worldTransform_.rotation_.y = turnFirstRotationY_ + (destinationRotationY-turnFirstRotationY_)*easing;
 	}
+
+	// 衝突情報を初期化
+	CollisionMapInfo collisionMapInfo;
+	// 移動量に速度の値をコピー
+	collisionMapInfo.move = velocity_;
+	// マップ衝突チェック
+	MapCollision(collisionMapInfo);
+
 	// 接地状態
 	if (onGround_) {
+
 		// 移動入力
 		if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT)) {
-			
-			// 衝突情報を初期化
-			CollisionMapInfo collisionMapInfo;
-			// 移動量に速度の値をコピー
-			collisionMapInfo.move = velocity_;
-
-			// マップ衝突チェック
-			MapCollision(collisionMapInfo);
-
-			
 			// 左右加速
 			Vector3 acceleration = {};
 			if (Input::GetInstance()->PushKey(DIK_RIGHT)) {
@@ -116,7 +115,7 @@ void Player::Update() {
 		velocity_.y = std::max(velocity_.y, -kLimitFallSpeed);
 	}
 	// 移動
-	worldTransform_.translation_ += velocity_;
+	worldTransform_.translation_ += collisionMapInfo.move;
 
 	// 着地フラグ
 	bool landing = false;
@@ -142,12 +141,8 @@ void Player::Update() {
 			onGround_ = true;
 		}
 	}
-
 	// 行列計算
 	worldTransform_.UpdateMatrix();
-
-	
-
 }
 
 void Player::Draw() {
@@ -202,6 +197,11 @@ void Player::MapCollisionTop(CollisionMapInfo& info) {
 		info.move.y = std::max(0.0f, moveY);
 		//天井に当たったことを記録する	
 		info.ceiling = true;
+	}
+
+	//天井に当たった？
+	if (info.ceiling) {
+		velocity_.y = 0;
 	}
 
 }
