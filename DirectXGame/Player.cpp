@@ -119,6 +119,7 @@ void Player::Update() {
 
 	// 着地フラグ
 	//bool landing = false;
+
 	// 地面と当たり判定
 	if (collisionMapInfo.landing) {
 		//着地状態に切り替える
@@ -146,13 +147,14 @@ void Player::Update() {
 		bool hit = false;
 		// 左下の当たり判定
 		IndexSet indexSet;
-		//Corner::kLeftBottom + Vector3(0, -1.0f, 0);
+		positionNew[static_cast<uint32_t>(Corner::kLeftBottom)] = positionNew[static_cast<uint32_t>(Corner::kLeftBottom)] + Vector3(0, -1.0f, 0);
 		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kLeftBottom)]);
 		mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 		if (mapChipType == MapChipType::kBlock) {
 			hit = true;
 		}
 		// 右下の当たり判定
+		positionNew[static_cast<uint32_t>(Corner::kRightBottom)] = positionNew[static_cast<uint32_t>(Corner::kRightBottom)] + Vector3(0, -1.0f, 0);
 		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kRightBottom)]);
 		mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 		if (mapChipType == MapChipType::kBlock) {
@@ -270,7 +272,7 @@ void Player::MapCollisionBottom(CollisionMapInfo& info) {
 	// ブロックにヒット
 	if (hit) {
 		// めり込みを排除する方向に移動量を設定
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ - info.move);
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ + info.move);
 		// めり込み先ブロックの範囲矩形
 		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 		info.move.y = std::min(0.0f, moveY);
