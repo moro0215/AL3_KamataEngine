@@ -53,8 +53,8 @@ public:
 	void MapCollision(CollisionMapInfo& info);
 	void MapCollisionTop(CollisionMapInfo& info);
 	void MapCollisionBottom(CollisionMapInfo& info);
-	/*void MapCollisionRight(CollisionMapInfo& info);
-	void MapCollisionLeft(CollisionMapInfo& info);*/
+	void MapCollisionRight(CollisionMapInfo& info);
+	void MapCollisionLeft(CollisionMapInfo& info);
 
 	//角の座標計算
 	Vector3 CornerPosition(const Vector3& center, Corner corner);
@@ -102,6 +102,8 @@ private:
 
 	// 着地時の速度減衰率
 	static inline const float kAttenuationLanding = 0.5f;
+	// 壁接触時の速度減衰率
+	static inline const float kAttenuationWall = 0.5f;
 
 	//マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
