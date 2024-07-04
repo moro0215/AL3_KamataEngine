@@ -91,6 +91,16 @@ void GameScene::Initialize() {
 
 	player_->SetMapChipField(mapChipField_);
 
+	// 座標をマップチップ番号で指定
+	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
+	// 自キャラの生成
+	enemy_ = new Enemy();
+	// 自キャラの初期化
+	enemy_->Initialize(model_, textureHandle_, &viewProjection_, enemyPosition);
+
+	enemy_->SetMapChipField(mapChipField_);
+
+
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
 	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
@@ -123,6 +133,9 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+
+	/// 敵キャラの更新
+	enemy_->Update();
 
 	// ブロックの更新
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
@@ -204,6 +217,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw();
+
+	// 敵キャラの描画
+	enemy_->Draw();
 
 	// ブロックの描画
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
