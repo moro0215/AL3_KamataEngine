@@ -117,9 +117,6 @@ void Player::Update() {
 	// 移動
 	worldTransform_.translation_ += collisionMapInfo.move;
 
-	// 着地フラグ
-	//bool landing = false;
-
 	//壁接触による減速
 	if (collisionMapInfo.hitWall) {
 		velocity_.x *= (1.0f - kAttenuationWall);
@@ -271,7 +268,7 @@ void Player::MapCollisionBottom(CollisionMapInfo& info) {
 		// めり込み先ブロックの範囲矩形
 		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		float moveY = (rect.top - worldTransform_.translation_.y) + (kHeight / 2) + 1.5f;
+		float moveY = (rect.top - worldTransform_.translation_.y) + (kHeight / 2) + 1.0f;
 		info.move.y = std::min(0.0f, moveY);
 		// 床に当たったことを記録する
 		info.landing = true;
@@ -353,7 +350,7 @@ void Player::MapCollisionLeft(CollisionMapInfo& info) {
 		indexSet = mapChipField_->GetMapChipIndexSetByPosition(worldTransform_.translation_ - info.move);
 		// めり込み先ブロックの範囲矩形
 		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
-		float moveX = (rect.right - worldTransform_.translation_.x) + (kWidth / 2) + 1.0f;
+		float moveX = (rect.right - worldTransform_.translation_.x) + (kWidth / 2) + 5.0f;
 		info.move.x = std::min(0.0f, moveX);
 		// 壁に当たったことを記録する
 		info.hitWall = true;
