@@ -43,3 +43,25 @@ void Enemy::Draw() {
 	// 3Dモデルの描画
 	model_->Draw(worldTransform_, *viewProjection_, enemyTextureHandle_);
 }
+
+Vector3 Enemy::GetWorldPosition() {
+	// ワールド座標を取得
+	Vector3 worldPos;
+	// ワールド座標の平行移動成分を取得
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
+}
+
+AABB Enemy::GetAABB() {
+	Vector3 worldPos = GetWorldPosition();
+
+	AABB aabb;
+
+	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
+	aabb.max = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
+
+	return aabb;
+}

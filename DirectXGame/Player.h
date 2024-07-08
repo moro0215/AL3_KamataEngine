@@ -59,6 +59,12 @@ public:
 	//角の座標計算
 	Vector3 CornerPosition(const Vector3& center, Corner corner);
 
+	//ワールド座標を取得
+	Vector3 GetWorldPosition();
+
+	//AABBを取得
+	AABB GetAABB();
+
 private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;
