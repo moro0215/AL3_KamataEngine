@@ -17,7 +17,7 @@ void Enemy::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vie
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = (Vector3)position;
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> * 3.0f / 2.0f;
-	textureHandle_ = textureHandle;
+	enemyTextureHandle_ = textureHandle;
 	viewProjection_ = viewProjection;
 }
 
@@ -26,7 +26,10 @@ void Enemy::Update() {
 	worldTransform_.UpdateMatrix();
 }
 
-void Enemy::Draw() {}
+void Enemy::Draw() {
+	// 3Dモデルの描画
+	model_->Draw(worldTransform_, *viewProjection_, enemyTextureHandle_);
+}
 
-void Enemy::SetMapChipField(MapChipField* mapChipField) {}
+//void Enemy::SetMapChipField(MapChipField* mapChipField) {}
 

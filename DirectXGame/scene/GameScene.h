@@ -59,6 +59,8 @@ private: // メンバ変数
 	/// </summary>
 	
 	uint32_t textureHandle_ = 0;
+	uint32_t enemyTextureHandle_ = 0;
+
 	//3Dモデル
 	Model* model_ = nullptr;
 	//ワールドトランスフォーム

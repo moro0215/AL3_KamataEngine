@@ -49,6 +49,7 @@ GameScene::~GameScene() {
 	delete model_;
 	delete player_;
 	delete blockModel_;
+	delete enemy_;
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -75,6 +76,8 @@ void GameScene::Initialize() {
 
 	// テクスチャの読み込み
 	textureHandle_ = TextureManager::Load("player.png");
+	enemyTextureHandle_ = TextureManager::Load("enemy.png");
+
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	// ワールドトランスフォームの初期化
@@ -93,12 +96,12 @@ void GameScene::Initialize() {
 
 	// 座標をマップチップ番号で指定
 	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
-	// 自キャラの生成
+	// 敵キャラの生成
 	enemy_ = new Enemy();
-	// 自キャラの初期化
-	enemy_->Initialize(model_, textureHandle_, &viewProjection_, enemyPosition);
+	// 敵キャラの初期化
+	enemy_->Initialize(model_, enemyTextureHandle_, &viewProjection_, enemyPosition);
 
-	enemy_->SetMapChipField(mapChipField_);
+	//enemy_->SetMapChipField(mapChipField_);
 
 
 	// ブロックの3Dモデルデータ生成

@@ -14,7 +14,7 @@ public:
 
 	void Draw();
 
-	void SetMapChipField(MapChipField* mapChipField);
+	//void SetMapChipField(MapChipField* mapChipField);
 
 private:
 	// ワールド変換データ
@@ -24,7 +24,7 @@ private:
 	Model* model_ = nullptr;
 
 	// テクスチャハンドル
-	uint32_t textureHandle_ = 0u;
+	uint32_t enemyTextureHandle_ = 0u;
 
 	ViewProjection* viewProjection_ = nullptr;
 
