@@ -95,14 +95,11 @@ void GameScene::Initialize() {
 	player_->SetMapChipField(mapChipField_);
 
 	// 座標をマップチップ番号で指定
-	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(3, 18);
+	Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20, 18);
 	// 敵キャラの生成
 	enemy_ = new Enemy();
 	// 敵キャラの初期化
 	enemy_->Initialize(model_, enemyTextureHandle_, &viewProjection_, enemyPosition);
-
-	//enemy_->SetMapChipField(mapChipField_);
-
 
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
