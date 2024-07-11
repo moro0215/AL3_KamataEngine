@@ -42,6 +42,27 @@ void GameScene::GenerateBlocks() {
 	}
 }
 
+void GameScene::CheckAllCollisions() {
+	#pragma region
+	//判定対象1と2の座標
+	AABB aabb1, aabb2;
+	//自キャラの座標
+	aabb1 = player_->GetAABB();
+	//自キャラと敵すべての当たり判定
+	for (Enemy* enemy : enemies_) {
+		//敵の座標
+		aabb2 = enemy->GetAABB();
+		//AABB同士の交差判定
+		if (ISCollisinAABBAABB(aabb1, aabb2)) {
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision(enemy);
+			//敵の衝突時コールバックを呼び出す
+			enemy->OnCollision(player_);
+		}
+	}
+	#pragma endregion
+}
+
 
 GameScene::GameScene() {}
 
@@ -199,6 +220,10 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
 	}
+
+	//すべての当たり判定を行う
+	CheckAllCollisions();
+
 }
 
 void GameScene::Draw() {

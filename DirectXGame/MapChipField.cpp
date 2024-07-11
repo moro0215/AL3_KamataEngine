@@ -4,6 +4,7 @@
 #include <map>
 #include <sstream>
 
+
 namespace {
 
 std::map<std::string, MapChipType> mapChipTable = {

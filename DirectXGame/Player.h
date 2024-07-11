@@ -2,9 +2,10 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-
+#include "Enemy.h"
 
 class MapChipField;
+class Enemy;
 
 class Player {
 
@@ -64,6 +65,9 @@ public:
 
 	//AABBを取得
 	AABB GetAABB();
+
+	//衝突応答
+	void OnCollision(const Enemy* enemy);
 
 private:
 	//ワールド変換データ
