@@ -18,3 +18,8 @@ Vector3 operator+(const Vector3& mValue1, const Vector3& mValue2);
 Vector3 operator-(const Vector3& mValue1, const Vector3& mValue2);
 
 Vector3& operator*(const Vector3& mValue1, float a);
+
+struct AABB {
+	Vector3 min; // 最小点
+	Vector3 max; // 最大点
+};
