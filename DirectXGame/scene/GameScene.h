@@ -14,6 +14,7 @@
 #include "MapChipField.h"
 #include "CameraController.h"
 #include "Enemy.h"
+#include "DeathParticles.h"
 
 
 /// <summary>
@@ -63,6 +64,7 @@ private: // メンバ変数
 	
 	uint32_t textureHandle_ = 0;
 	uint32_t enemyTextureHandle_ = 0;
+	uint32_t ParticleTextureHandle_ = 0;
 
 	//3Dモデル
 	Model* model_ = nullptr;
@@ -98,5 +100,9 @@ private: // メンバ変数
 
 	//追従カメラ
 	CameraController* cameraController_ = nullptr;
+
+	//デスパーティクル
+	DeathParticles* deathParticles_ = nullptr;
+	Model* particleModel_ = nullptr;
 
 };

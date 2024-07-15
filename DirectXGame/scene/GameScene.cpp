@@ -97,6 +97,9 @@ GameScene::~GameScene() {
 	delete modelSkydome_;
 	delete mapChipField_;
 	delete cameraController_;
+
+	delete deathParticles_;
+	delete particleModel_;
 }
 
 void GameScene::Initialize() {
@@ -111,6 +114,7 @@ void GameScene::Initialize() {
 	// テクスチャの読み込み
 	textureHandle_ = TextureManager::Load("player.png");
 	enemyTextureHandle_ = TextureManager::Load("enemy.png");
+	ParticleTextureHandle_ = TextureManager::Load("white1x1.png");
 
 	// 3Dモデルの生成
 	model_ = Model::Create();
@@ -171,6 +175,13 @@ void GameScene::Initialize() {
 
 	CameraController::Rect movableArea_ = {25.0f, 180.0f, 0.0f, 100.0f};
 	cameraController_->SetMovableArea(movableArea_);
+
+	//デスパーティクル
+	deathParticles_ = new DeathParticles;
+
+	particleModel_ = Model::Create();
+
+	deathParticles_->Initialize(particleModel_, &viewProjection_, playerPosition, ParticleTextureHandle_);
 }
 
 void GameScene::Update() {
