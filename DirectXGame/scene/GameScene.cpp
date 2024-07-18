@@ -1,7 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
-#include "function.h"
+#include <function.h>
 
 // AABBとAABBの当たり判定
 bool ISCollisinAABBAABB(const AABB& aabb1, const AABB& aabb2) {
@@ -132,10 +132,7 @@ void GameScene::Initialize() {
 
 	player_->SetMapChipField(mapChipField_);
 
-	// 座標をマップチップ番号で指定
-	//Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20, 18);
 	// 敵キャラの生成
-	//enemy_ = new Enemy();
 	for (int32_t i = 0; i < 3; ++i) {
 		Enemy* newEnemy = new Enemy();
 		// 座標をマップチップ番号で指定
@@ -145,8 +142,6 @@ void GameScene::Initialize() {
 
 		enemies_.push_back(newEnemy);
 	}
-	// 敵キャラの初期化
-	//enemy_->Initialize(model_, enemyTextureHandle_, &viewProjection_, enemyPosition);
 
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
@@ -202,6 +197,11 @@ void GameScene::Update() {
 			// 定数バッファーに転送
 			worldTransformBlock->TransferMatrix();
 		}
+	}
+
+	//デスパーティクル
+	if (deathParticles_) {
+		deathParticles_->Update();
 	}
 	
 	// 天球の更新
@@ -281,6 +281,12 @@ void GameScene::Draw() {
 	for (Enemy* newEnemy : enemies_) {
 		newEnemy->Draw();
 	}
+
+	// デスパーティクルの描画
+	if (deathParticles_) {
+		deathParticles_->Draw();
+	}
+
 	// ブロックの描画
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
@@ -290,6 +296,8 @@ void GameScene::Draw() {
 			blockModel_->Draw(*worldTransformBlock, viewProjection_);
 		}
 	}
+
+
 
 	// 天球の描画
 	skydome_->Draw();

@@ -149,7 +149,6 @@
     <ClInclude Include="DeathParticles.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="function.h" />
-    <ClInclude Include="function2.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="MapChipField.h" />
     <ClInclude Include="math\Matrix4x4.h" />

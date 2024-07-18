@@ -16,9 +16,6 @@ public:
 	void Draw();
 
 private:
-	// ワールド変換データ
-	WorldTransform worldTransforms_;
-
 	// モデル
 	Model* particleModel_ = nullptr;
 
