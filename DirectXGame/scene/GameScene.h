@@ -77,6 +77,7 @@ private: // メンバ変数
 
 	//敵
 	std::list<Enemy*> enemies_;
+	Model* enemyModel_ = nullptr;
 
 	//ブロックの3Dモデルデータ
 	Model* blockModel_ = nullptr;

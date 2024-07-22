@@ -117,7 +117,7 @@ void GameScene::Initialize() {
 	ParticleTextureHandle_ = TextureManager::Load("white1x1.png");
 
 	// 3Dモデルの生成
-	model_ = Model::Create();
+	model_ = Model::CreateFromOBJ("player", true);
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
@@ -132,13 +132,14 @@ void GameScene::Initialize() {
 
 	player_->SetMapChipField(mapChipField_);
 
+	enemyModel_ = Model::CreateFromOBJ("enemy", true);
 	// 敵キャラの生成
 	for (int32_t i = 0; i < 3; ++i) {
 		Enemy* newEnemy = new Enemy();
 		// 座標をマップチップ番号で指定
 		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20, 18 - i);
 		// 敵キャラの初期化
-		newEnemy->Initialize(model_, enemyTextureHandle_, &viewProjection_, enemyPosition);
+		newEnemy->Initialize(enemyModel_, enemyTextureHandle_, &viewProjection_, enemyPosition);
 
 		enemies_.push_back(newEnemy);
 	}
@@ -174,7 +175,7 @@ void GameScene::Initialize() {
 	//デスパーティクル
 	deathParticles_ = new DeathParticles;
 
-	particleModel_ = Model::Create();
+	particleModel_ = Model::CreateFromOBJ("particle", true);
 
 	deathParticles_->Initialize(particleModel_, &viewProjection_, playerPosition, ParticleTextureHandle_);
 }

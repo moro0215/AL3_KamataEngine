@@ -22,7 +22,7 @@ void Player::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = (Vector3)position;
-	worldTransform_.rotation_.y = std::numbers::pi_v<float> * 5.0f / 2.0f;
+	worldTransform_.rotation_.y = std::numbers::pi_v<float> * -4.0f/ 2.0f;
 	textureHandle_ = textureHandle;
 	viewProjection_ = viewProjection;
 }
@@ -40,11 +40,11 @@ void Player::Update() {
 		float easing = easeOutSine(timeRotation);
 
 		// 左右の自キャラ角度テーブル
-		float destinationRotationYTable[] = {std::numbers::pi_v<float> * 5.0f / 2.0f, std::numbers::pi_v<float> * 3.0f / 2.0f};
+		float destinationRotationYTable[] = {std::numbers::pi_v<float> * -4.0f/ 2.0f, std::numbers::pi_v<float> * -2.0f / 2.0f};
 		// 状況に応じた角度の取得
 		float destinationRotationY = destinationRotationYTable[static_cast<uint32_t>(lrDirection_)];
 		// 自キャラの角度を設定
-		worldTransform_.rotation_.y = turnFirstRotationY_ + (destinationRotationY-turnFirstRotationY_)*easing;
+		worldTransform_.rotation_.y = turnFirstRotationY_ + (destinationRotationY - turnFirstRotationY_) * easing;
 	}
 
 	// 衝突情報を初期化
@@ -72,7 +72,7 @@ void Player::Update() {
 				if (lrDirection_ != LRDirection::kRight) {
 					lrDirection_ = LRDirection::kRight;
 					// 旋回開始時の角度の記録
-					turnFirstRotationY_ = std::numbers::pi_v<float> * 5.0f / 2.0f;
+					turnFirstRotationY_ = std::numbers::pi_v<float> * 6.0f / 2.0f;
 					// 旋回タイマーに時間を記録
 					turnTimer_ = 1.0f;
 				}
@@ -87,7 +87,7 @@ void Player::Update() {
 				if (lrDirection_ != LRDirection::kLeft) {
 					lrDirection_ = LRDirection::kLeft;
 					// 旋回開始時の角度の記録
-					turnFirstRotationY_ = std::numbers::pi_v<float> * 3.0f / 2.0f;
+					turnFirstRotationY_ = std::numbers::pi_v<float> * 8.0f / 2.0f;
 					// 旋回タイマーに時間を記録
 					turnTimer_ = 1.0f;
 				}
@@ -174,7 +174,7 @@ void Player::Update() {
 
 void Player::Draw() {
 	// 3Dモデルの描画
-	model_->Draw(worldTransform_, *viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, *viewProjection_);
 }
 
 const WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
