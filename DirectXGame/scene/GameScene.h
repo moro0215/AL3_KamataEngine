@@ -53,6 +53,9 @@ public: // メンバ関数
 	//すべての当たり判定を行う
 	void CheckAllCollisions();
 
+	//フェーズの切り替え
+	void ChangePhase();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -106,4 +109,12 @@ private: // メンバ変数
 	DeathParticles* deathParticles_ = nullptr;
 	Model* particleModel_ = nullptr;
 
+	//ゲームのフェーズ
+	enum class Phase {
+		kPlay,//ゲームプレイ
+		kDeath,//デス演出
+	};
+
+	//ゲームの現在フェーズ
+	Phase phase_;
 };
