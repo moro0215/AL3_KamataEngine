@@ -18,6 +18,9 @@ public:
 
 	void Draw();
 
+	// デスフラグのgetter
+	bool IsFinished() const { return isFinished_; }
+
 private:
 	// モデル
 	Model* particleModel_ = nullptr;

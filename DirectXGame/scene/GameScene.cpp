@@ -312,6 +312,9 @@ void GameScene::Update() {
 			viewProjection_.UpdateMatrix();
 		}
 
+		if (deathParticles_ && deathParticles_->IsFinished()) {
+			finished_ = true;
+		}
 		break;
 	
 	}

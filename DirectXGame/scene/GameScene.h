@@ -56,6 +56,9 @@ public: // メンバ関数
 	//フェーズの切り替え
 	void ChangePhase();
 
+	//デスフラグのgetter
+	bool IsFinished() const { return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -117,4 +120,7 @@ private: // メンバ変数
 
 	//ゲームの現在フェーズ
 	Phase phase_;
+
+	//終了フラグ
+	bool finished_ = false;
 };
