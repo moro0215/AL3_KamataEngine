@@ -136,8 +136,8 @@ void GameScene::Initialize() {
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 
 	// テクスチャの読み込み
-	textureHandle_ = TextureManager::Load("player.png");
-	enemyTextureHandle_ = TextureManager::Load("enemy.png");
+	textureHandle_ = TextureManager::Load("player/player.png");
+	enemyTextureHandle_ = TextureManager::Load("enemy/enemy.png");
 	ParticleTextureHandle_ = TextureManager::Load("white1x1.png");
 
 	// 3Dモデルの生成
@@ -161,7 +161,7 @@ void GameScene::Initialize() {
 	for (int32_t i = 0; i < 3; ++i) {
 		Enemy* newEnemy = new Enemy();
 		// 座標をマップチップ番号で指定
-		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20, 18 - i);
+		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20 - i, 18);
 		// 敵キャラの初期化
 		newEnemy->Initialize(enemyModel_, enemyTextureHandle_, &viewProjection_, enemyPosition);
 
@@ -170,7 +170,7 @@ void GameScene::Initialize() {
 
 	// ブロックの3Dモデルデータ生成
 	blockModel_ = Model::Create();
-	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
+	blockTextureHandle_ = TextureManager::Load("cube/cube.png");
 
 	// ブロックの生成
 	GenerateBlocks();
