@@ -71,6 +71,8 @@ public:
 
 	//デスフラグのgetter
 	bool IsDead() const { return isDead_; };
+	//ゴールのゲッター
+	bool IsGoal() const { return isGoal_; };
 
 private:
 	//ワールド変換データ
@@ -129,4 +131,6 @@ private:
 
 	//デスフラグ
 	bool isDead_ = false;
+	//ゴールフラグ
+	bool isGoal_ = false;
 };

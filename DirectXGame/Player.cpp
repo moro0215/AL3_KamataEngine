@@ -200,6 +200,7 @@ void Player::MapCollisionTop(CollisionMapInfo& info) {
 	MapChipType mapChipType;
 	// 真上の当たり判定
 	bool hit = false;
+	bool isGoal = false;
 
 	// 左上点の当たり判定
 	IndexSet indexSet;
@@ -208,11 +209,18 @@ void Player::MapCollisionTop(CollisionMapInfo& info) {
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
+	}
+	
 	// 右上点の当たり判定
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kRightTop)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
+	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
 	}
 	
 	//ブロックにヒット
@@ -225,6 +233,9 @@ void Player::MapCollisionTop(CollisionMapInfo& info) {
 		info.move.y = std::max(0.0f, moveY);
 		//天井に当たったことを記録する	
 		info.ceiling = true;
+	}
+	if (isGoal) {
+		isDead_ = true;
 	}
 
 	//天井に当たった？
@@ -247,6 +258,7 @@ void Player::MapCollisionBottom(CollisionMapInfo& info) {
 
 	//真下の当たり判定
 	bool hit = false;
+	bool isGoal = false;
 
 	//左下の当たり判定
 	IndexSet indexSet;
@@ -255,11 +267,17 @@ void Player::MapCollisionBottom(CollisionMapInfo& info) {
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
+	}
 	//右下の当たり判定
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kRightBottom)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
+	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
 	}
 	// ブロックにヒット
 	if (hit) {
@@ -272,6 +290,9 @@ void Player::MapCollisionBottom(CollisionMapInfo& info) {
 		info.move.y = std::min(0.0f, moveY);
 		// 床に当たったことを記録する
 		info.landing = true;
+	}
+	if (isGoal) {
+		isDead_ = true;
 	}
 }
 void Player::MapCollisionRight(CollisionMapInfo& info) {
@@ -288,6 +309,7 @@ void Player::MapCollisionRight(CollisionMapInfo& info) {
 
 	// 右の当たり判定
 	bool hit = false;
+	bool isGoal = false;
 
 	// 右上の当たり判定
 	IndexSet indexSet;
@@ -296,11 +318,17 @@ void Player::MapCollisionRight(CollisionMapInfo& info) {
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
+	}
 	// 右下の当たり判定
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kRightBottom)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
+	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
 	}
 
 	// ブロックにヒット
@@ -313,6 +341,9 @@ void Player::MapCollisionRight(CollisionMapInfo& info) {
 		info.move.x = std::max(0.0f, moveX);
 		// 壁に当たったことを記録する
 		info.hitWall = true;
+	}
+	if (isGoal) {
+		isDead_ = true;
 	}
 }
 void Player::MapCollisionLeft(CollisionMapInfo& info) {
@@ -329,6 +360,7 @@ void Player::MapCollisionLeft(CollisionMapInfo& info) {
 
 	// 左の当たり判定
 	bool hit = false;
+	bool isGoal = false;
 
 	// 左上の当たり判定
 	IndexSet indexSet;
@@ -337,11 +369,17 @@ void Player::MapCollisionLeft(CollisionMapInfo& info) {
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
+	}
 	// 左下の当たり判定
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionNew[static_cast<uint32_t>(Corner::kLeftBottom)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
+	}
+	if (mapChipType == MapChipType::kGoal) {
+		isGoal = true;
 	}
 
 	// ブロックにヒット
@@ -354,6 +392,9 @@ void Player::MapCollisionLeft(CollisionMapInfo& info) {
 		info.move.x = std::min(0.0f, moveX);
 		// 壁に当たったことを記録する
 		info.hitWall = true;
+	}
+	if (isGoal) {
+		isDead_ = true;
 	}
 }
 

@@ -6,6 +6,7 @@
 enum class MapChipType {
 	kBlank, // 空白
 	kBlock, // ブロック
+	kGoal,//ゴール
 };
 
 struct MapChipData {
@@ -25,12 +26,14 @@ public:
 		float bottom;
 		float top;
 	};
+	//リセット
 	void ResetMapChipData();
-
+	//読み込み
 	void LoadMapChipCsv(const std::string& filePath);
 
+	//マップチップ種別の取得
 	MapChipType GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex);
-
+	//マップチップ座標の取得
 	Vector3 GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex);
 
 	const int GetNumBlockHorizontal();

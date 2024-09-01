@@ -29,6 +29,7 @@ void Enemy::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vie
 void Enemy::Update() {
 	//移動
 	worldTransform_.translation_ += velocity_;
+
 	//タイマーを加算
 	walkTimer += 1.0f / 60.0f;
 	//回転アニメーション

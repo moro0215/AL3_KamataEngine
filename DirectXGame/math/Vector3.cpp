@@ -49,7 +49,3 @@ Vector3& operator*(const Vector3& mValue1, float a) {
 	return Vector3(mValue1) *= a;
 	
 }
-
-
-
-

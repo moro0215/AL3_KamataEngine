@@ -47,7 +47,7 @@ private:
 	static inline const float kVelocityBias = 20.0f;
 	//追従対象の各方向へのカメラの移動範囲
 	static inline const Rect margin_{
-	    35.0f, 200.0f, 10.0f, 200.0f
+	    35.0f, 162.0f, 10.0f, 200.0f
 	};
 
 };

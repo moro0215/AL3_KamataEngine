@@ -161,7 +161,7 @@ void GameScene::Initialize() {
 	for (int32_t i = 0; i < 3; ++i) {
 		Enemy* newEnemy = new Enemy();
 		// 座標をマップチップ番号で指定
-		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20 - i, 18);
+		Vector3 enemyPosition = mapChipField_->GetMapChipPositionByIndex(20 - 5*i, 18);
 		// 敵キャラの初期化
 		newEnemy->Initialize(enemyModel_, enemyTextureHandle_, &viewProjection_, enemyPosition);
 
@@ -315,6 +315,9 @@ void GameScene::Update() {
 		if (deathParticles_ && deathParticles_->IsFinished()) {
 			finished_ = true;
 		}
+		if (player_->IsGoal()) {
+			finished_ = true;
+		}
 		break;
 	
 	}
@@ -372,8 +375,6 @@ void GameScene::Draw() {
 			blockModel_->Draw(*worldTransformBlock, viewProjection_);
 		}
 	}
-
-
 
 	// 天球の描画
 	skydome_->Draw();
